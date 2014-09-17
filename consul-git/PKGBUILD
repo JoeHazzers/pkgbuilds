@@ -5,10 +5,12 @@ pkgver=v0.4.0.r8.g36fd5f7
 pkgrel=1
 pkgdesc="Service discovery and configuration made easy. Distrubuted, highly available, and datacenter-aware."
 arch=('x86_64')
-url="http://consu.io"
+url="http://consul.io"
 license=('custom:MPLv2')
 makedepends=('git' 'go' 'ruby-sass' 'ruby-uglifier')
-source=("$pkgbase::git+https://github.com/hashicorp/consul.git")
+install='consul.install'
+source=("$pkgbase::git+https://github.com/hashicorp/consul.git"
+        'service')
 sha256sums=('SKIP')
 _pkgpath="github.com/hashicorp/consul"
 
@@ -46,6 +48,12 @@ package_consul-git() {
 
   install -Dm755 "bin/consul" "$pkgdir/usr/bin/consul"
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+
+  install -Ddm750 "$pkgdir/etc/consul"
+  install -Ddm750 "$pkgdir/etc/consul/conf.d"
+  install -Ddm750 "$pkgdir/etc/consul/tls"
+  install -Dm644 ../config.json "$pkgdir/etc/consul/config.json"
+  install -Dm644 ../consul.service "$pkgdir"/usr/lib/systemd/system/consul.service
 }
 
 package_consul-ui-git() {

@@ -1,0 +1,30 @@
+datadir=/var/lib/consul
+
+post_install() {
+  groupadd  -r consul
+  useradd -r consul -g consul -d /var/lib/consul -s /usr/bin/nologin -c "Consul" consul
+
+  if [[ ! -e $datadir ]]; then
+    install -dm700 $datadir
+    chown -R consul:consul var/lib/consul &>/dev/null
+  fi
+}
+
+pre_upgrade() {
+  pre_install
+}
+
+post_upgrade(){
+  getent group consul >/dev/null 2>&1 || groupadd -r consul &>/dev/null
+  getent passwd consul >/dev/null 2>&1 || useradd -r consul -g consul \
+    -d /var/lib/consul -s /usr/bin/nologin -c "Consul" consul &>/dev/null
+
+post_remove(){
+  if getent passwd consul >/dev/null 2>&1; then
+    userdel consul
+  fi
+
+  if getent group consul >/dev/null 2>&1; then
+    groupdel consul
+  fi
+}
