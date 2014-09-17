@@ -8,7 +8,7 @@ arch=(x86_64)
 url="http://consu.io"
 license=('custom:MPLv2')
 depends=('glibc')
-makedepends=('git' 'go' 'ruby-bundler')
+makedepends=('git' 'go' 'ruby-sass' 'ruby-uglifier')
 source=("consul::git+https://github.com/hashicorp/consul.git#tag=v$pkgver")
 sha256sums=('SKIP')
 _pkgpath="github.com/hashicorp/consul"
