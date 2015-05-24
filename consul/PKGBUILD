@@ -1,0 +1,36 @@
+# Maintainer: Joe Harrison <joehazzers@gmail.com>
+pkgname=consul
+pkgver=0.5.2
+pkgrel=1
+pkgdesc="Service discovery and configuration made easy."
+arch=('i686' 'x86_64')
+url="https://consul.io"
+license=('custom:MPLv2')
+depends=('glibc')
+backup=('etc/consul/config.json')
+install=$pkgname.install
+source=('LICENSE'
+        'sysusers.conf'
+        'consul.service'
+        'config.json')
+source_i686=("https://dl.bintray.com/mitchellh/consul/${pkgver}_linux_386.zip")
+source_x86_64=("https://dl.bintray.com/mitchellh/consul/${pkgver}_linux_amd64.zip")
+sha256sums=('60222c28c1a7f6a92c7df98e5c5f4459e624e6e285e0b9b94467af5f6ab3343d'
+            '377ffd0bd03e7145e916efd6843fb0a4b6ef362c645b2f84985045488edd4d9c'
+            'f65bc081fdcbc40650604dfcfda311b8c532e06c17bcbec6cbf101b236ba206d'
+            'b881e20b83b0070234925338e97ba710a6178ccdfe2702b0da391b0944f55e1d')
+sha256sums_i686=('29306ce398109f954ceeea3af79878be4fb0d949f8af3a27c95ccef2101e8f60')
+sha256sums_x86_64=('171cf4074bfca3b1e46112105738985783f19c47f4408377241b868affa9d445')
+
+package() {
+  install -D -m755 consul "$pkgdir/usr/bin/consul"
+  install -D -m644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+
+  install -D -m644 sysusers.conf "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+
+  install -D -m644 consul.service "$pkgdir/usr/lib/systemd/system/$pkgname.service"
+  install -D -m770 -o 0 -d "$pkgdir/etc/$pkgname"
+  install -D -m644 -o 0 config.json "$pkgdir/etc/consul/config.json"
+
+  install -D -m770 -o 0 -d "$pkgdir/var/lib/consul"
+}
