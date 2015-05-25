@@ -1,0 +1,5 @@
+post_install() {
+  systemd-sysusers vault.conf
+
+  chgrp -R vault /etc/vault /var/lib/vault
+}

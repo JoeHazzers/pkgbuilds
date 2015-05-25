@@ -1,0 +1,11 @@
+[Unit]
+Description=Secret management
+After=network.target
+
+[Service]
+User=vault
+Group=vault
+ExecStart=/usr/bin/vault server -config=/etc/vault
+
+[Install]
+WantedBy=multi-user.target

@@ -7,14 +7,26 @@ arch=('i686' 'x86_64')
 url="https://www.vaultproject.io/"
 license=('custom:MPLv2')
 depends=('glibc')
-source=("LICENSE")
+install=vault.install
+source=('LICENSE'
+        'sysusers.conf'
+        'vault.service')
 source_i686=("https://dl.bintray.com/mitchellh/vault/vault_${pkgver}_linux_386.zip")
 source_x86_64=("https://dl.bintray.com/mitchellh/vault/vault_${pkgver}_linux_amd64.zip")
-sha256sums=('60222c28c1a7f6a92c7df98e5c5f4459e624e6e285e0b9b94467af5f6ab3343d')
+sha256sums=('60222c28c1a7f6a92c7df98e5c5f4459e624e6e285e0b9b94467af5f6ab3343d'
+            '7b3087a2af830af8b93f1515236b96aa22039530d66c7d11d103f40e0704da8b'
+            'ab95f187c445831d003438167936e27a8b1044902c05f6dd50a4224f1d447138')
 sha256sums_i686=('20cf0fb7df3fb451bfd80ef7d14a7884d17e1a04b15ebdd3030d046d07d71b5a')
 sha256sums_x86_64=('12c28cf7d6b6052c24817072fb95d4cfa2a391b507c705e960faf11afb5ee6ad')
 
 package() {
-  install -m755 -D vault "$pkgdir/usr/bin/vault"
-  install -m644 -D LICENSE "$pkgdir/usr/share/licenses/vaultproject/LICENSE"
+  install -D -m755 vault "$pkgdir/usr/bin/vault"
+  install -D -m644 LICENSE "$pkgdir/usr/share/licenses/vault/LICENSE"
+
+  install -D -m644 sysusers.conf "$pkgdir/usr/lib/sysusers.d/vault.conf"
+  install -D -m644 vault.service "$pkgdir/usr/lib/systemd/system/vault.service"
+
+  install -D -m750 -o 0 -d "$pkgdir/etc/vault"
+
+  install -D -m770 -o 0 -d "$pkgdir/var/lib/vault"
 }
