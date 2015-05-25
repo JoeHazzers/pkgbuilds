@@ -1,3 +1,3 @@
 {
-  "data_dir": "/var/consul"
+  "data_dir": "/var/lib/consul"
 }

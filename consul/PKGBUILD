@@ -16,9 +16,9 @@ source=('LICENSE'
 source_i686=("https://dl.bintray.com/mitchellh/consul/${pkgver}_linux_386.zip")
 source_x86_64=("https://dl.bintray.com/mitchellh/consul/${pkgver}_linux_amd64.zip")
 sha256sums=('60222c28c1a7f6a92c7df98e5c5f4459e624e6e285e0b9b94467af5f6ab3343d'
-            '377ffd0bd03e7145e916efd6843fb0a4b6ef362c645b2f84985045488edd4d9c'
-            'f65bc081fdcbc40650604dfcfda311b8c532e06c17bcbec6cbf101b236ba206d'
-            'b881e20b83b0070234925338e97ba710a6178ccdfe2702b0da391b0944f55e1d')
+            '792cf39353eb032c4eb6b9b32809650030054a29e4e8640114d0943c5fc1dfa1'
+            'c2c25f5b95f7fc0aacd653f87a7f953552d16cad12b83f6e09353d595ecbd2c1'
+            '1f1f24ac4b37df816974fbe3e3ba3d7ed1c8d15cb2425ba29b196329473bf38c')
 sha256sums_i686=('29306ce398109f954ceeea3af79878be4fb0d949f8af3a27c95ccef2101e8f60')
 sha256sums_x86_64=('171cf4074bfca3b1e46112105738985783f19c47f4408377241b868affa9d445')
 
@@ -26,10 +26,10 @@ package() {
   install -D -m755 consul "$pkgdir/usr/bin/consul"
   install -D -m644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 
-  install -D -m644 sysusers.conf "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+  install -D -m644 sysusers.conf "$pkgdir/usr/lib/sysusers.d/consul.conf"
 
-  install -D -m644 consul.service "$pkgdir/usr/lib/systemd/system/$pkgname.service"
-  install -D -m770 -o 0 -d "$pkgdir/etc/$pkgname"
+  install -D -m644 consul.service "$pkgdir/usr/lib/systemd/system/consul.service"
+  install -D -m750 -o 0 -d "$pkgdir/etc/consul"
   install -D -m644 -o 0 config.json "$pkgdir/etc/consul/config.json"
 
   install -D -m770 -o 0 -d "$pkgdir/var/lib/consul"
